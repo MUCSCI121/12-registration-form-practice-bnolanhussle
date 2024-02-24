@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!-- DO NOT CHANGE THIS PAGE -->
+<html>
+
+<head>
+  <title>Form Data</title>
+</head>
+
+<body>
+  Submitted form data:
+  <table id="formData">
+    <tr>
+      <th>Form Field Name</th>
+      <th>Value</th>
+    </tr>
+  </table>
+  <div id="error" style="color: red;"></div>
+</body>
+<script>
+  console.log("Loaded script.js");
+
+  // Only execute this javascript after the page has loaded
+  window.addEventListener("load", () => {
+    try {
+      console.log("Starting URL processing");
+      const formData = parseUrl();
+      updateDOM(formData);
+    } catch (exception) {
+      console.error("Failed processing", exception);
+      const errorDiv = document.getElementById("error");
+      errorDiv.innerText = "Failed to process the query string: " + exception.message;
+    }
+  });
+
+  function parseUrl() {
+    console.log("formElements: started");
+    // Create a new array variable to hold the values
+    var formValues = [];
+
+    // Get the query string with the form values.  Skip the first
+    // character which is the question mark symbol and not needed
+    // for our code
+    const queryString = location.search.substring(1);
+    console.log("formElements: queryString: ", queryString);
+
+    // Split the string into an array on the ampersand symbol which 
+    // is the separator between the different name value pairs
+    const nameValuePairs = queryString.split("&");
+
+    // Loop through each name value pair 
+    nameValuePairs.forEach((pair) => {
+      // Split the name value pair on the equal symbol so we have an array of two items
+      // First item is the input name and second item is the value
+      var splitPair = pair.split("=");
+      formValues.push(splitPair);
+    });
+    console.log("formElements: completed");
+
+    // Return the array for further processing
+    return formValues;
+  }
+
+  function updateDOM(formData) {
+    console.log("updateDOM: started", formData);
+
+    // Grab a reference to the parent table so we can add
+    // new rows with the name/value pairs
+    var parentTable = document.getElementById("formData");
+    // Loop through each name value pair found in the URL
+    formData.forEach((pair) => {
+      // Create a new <tr> element
+      const tableRow = document.createElement("tr");
+
+      // Create a new <td> element for the input name
+      const nameCell = document.createElement("td");
+      nameCell.innerHTML = pair[0];
+      // Add the element to the table row
+      tableRow.appendChild(nameCell);
+
+      // Create a new <td> element for the input value
+      const valueCell = document.createElement("td");
+      valueCell.innerHTML = pair[1];
+      // Add the element to the table row
+      tableRow.appendChild(valueCell);
+      // Add the new row to the table
+      parentTable.appendChild(tableRow);
+    });
+    console.log("updateDOM: completed");
+  }
+</script>
+
+</html>
