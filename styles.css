@@ -21,7 +21,7 @@ input {
 }
 
 .checkboxLabel {
-    
+  display: inline-block;
 }
 
 button {
