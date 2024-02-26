@@ -23,5 +23,5 @@ input {
 button {
   background-color: #1f513f;
   color: white;
-  box-shadow: inset 0 0 0 10px #1f513f;
+  /* box-shadow: inset 0 0 0 10px #1f513f; */
 }
