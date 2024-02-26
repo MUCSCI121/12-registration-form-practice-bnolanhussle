@@ -21,5 +21,6 @@ input {
 }
 
 button {
-    #1f513f;
+  background-color: #1f513f;
+  color: white;
 }
